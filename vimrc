@@ -4,6 +4,10 @@ call plug#begin('~/.vim/plugged')
 " golang 支持
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" 代码结构
+" Plug 'liuchengxu/vista.vim'
+Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 " typescript 支持
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
@@ -19,6 +23,7 @@ Plug 'airblade/vim-gitgutter'
 "Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' },
 Plug 'junegunn/fzf.vim',
+"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdcommenter'
 "Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'rking/ag.vim'
@@ -37,10 +42,37 @@ Plug 'skanehira/preview-markdown.vim'
 call plug#end()
 
 " 绑定快捷键
+let mapleader = "\<space>"
 inoremap jk <ESC>
-nmap <C-n> :NERDTreeToggle<CR>
+" NERDTreeToggle
+nnoremap <leader>tt :NERDTreeToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
+
+" PreviewMarkdown
+nnoremap <leader>pw :PreviewMarkdown<CR>
+
+" vimrc
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" switch buffer
+nnoremap <leader>1 :1b<CR>
+nnoremap <leader>2 :2b<CR>
+nnoremap <leader>3 :3b<CR>
+nnoremap <leader>4 :4b<CR>
+nnoremap <leader>5 :5b<CR>
+nnoremap <leader>6 :6b<CR>
+nnoremap <leader>7 :7b<CR>
+nnoremap <leader>8 :8b<CR>
+nnoremap <leader>9 :9b<CR>
+nnoremap <leader>d :bd<CR>
+" Vista
+" nnoremap <leader>v :Vista!!<CR>
+nnoremap <leader>tb :TagbarToggle<CR>
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+
+let g:tagbar_width = 30
 
 " open NERDTree automatically
 "autocmd StdinReadPre * let s:std_in=1
@@ -97,18 +129,6 @@ colorscheme nord
 function! IsNERDTreeOpen()        
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
-
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
-
-" Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
 
 " coc config
 let g:coc_global_extensions = [
@@ -287,6 +307,7 @@ set scrolloff=5
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " 设置下方箭头三角等字体支持
 let g:airline_powerline_fonts = 1
@@ -294,3 +315,53 @@ let g:airline_powerline_fonts = 1
 " 设置Markdown预览
 let g:preview_markdown_vertical = 1
 let g:preview_markdown_parser = 'glow'
+
+"" Vista
+"function! NearestMethodOrFunction() abort
+  "return get(b:, 'vista_nearest_method_or_function', '')
+"endfunction
+
+"set statusline+=%{NearestMethodOrFunction()}
+
+"" By default vista.vim never run if you don't call it explicitly.
+""
+"" If you want to show the nearest function in your statusline automatically,
+"" you can add the following line to your vimrc 
+"autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+"" How each level is indented and what to prepend.
+"" This could make the display more compact or more spacious.
+"" e.g., more compact: ["▸ ", ""]
+"" Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
+"let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+"" Executive used when opening vista sidebar without specifying it.
+"" See all the avaliable executives via `:echo g:vista#executives`.
+"let g:vista_default_executive = 'ctags'
+
+"" Set the executive for some filetypes explicitly. Use the explicit executive
+"" instead of the default one for these filetypes when using `:Vista` without
+"" specifying the executive.
+"let g:vista_executive_for = {
+  "\ 'cpp': 'vim_lsp',
+  "\ 'php': 'vim_lsp',
+  "\ }
+
+"" Declare the command including the executable and options used to generate ctags output
+"" for some certain filetypes.The file path will be appened to your custom command.
+"" For example:
+"let g:vista_ctags_cmd = {
+      "\ 'haskell': 'hasktags -x -o - -c',
+      "\ }
+
+"" To enable fzf's preview window set g:vista_fzf_preview.
+"" The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
+"" For example:
+"let g:vista_fzf_preview = ['right:50%']
+"" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
+"let g:vista#renderer#enable_icon = 1
+
+"" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+"let g:vista#renderer#icons = {
+"\   "function": "\uf794",
+"\   "variable": "\uf71b",
+"\  }
