@@ -31,6 +31,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'mhinz/vim-startify'
 
+Plug 'skanehira/preview-markdown.vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -288,3 +290,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 
 " 设置下方箭头三角等字体支持
 let g:airline_powerline_fonts = 1
+
+" 设置Markdown预览
+let g:preview_markdown_vertical = 1
+let g:preview_markdown_parser = 'glow'
