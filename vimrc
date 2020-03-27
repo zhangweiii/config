@@ -4,9 +4,10 @@ call plug#begin('~/.vim/plugged')
 " golang 支持
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " 代码结构
-" Plug 'liuchengxu/vista.vim'
-Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
+" Plug 'majutsushi/tagbar'
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 " typescript 支持
@@ -68,7 +69,7 @@ nnoremap <leader>8 :8b<CR>
 nnoremap <leader>9 :9b<CR>
 nnoremap <leader>d :bd<CR>
 " Vista
-" nnoremap <leader>v :Vista!!<CR>
+nnoremap <leader>v :Vista!!<CR>
 nnoremap <leader>tb :TagbarToggle<CR>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
@@ -139,6 +140,7 @@ let g:coc_global_extensions = [
   \ 'coc-prettier', 
   \ 'coc-json', 
   \ 'coc-go', 
+  \ 'coc-tabnine', 
   \ ]
 " from readme
 " if hidden is not set, TextEdit might fail.
