@@ -102,7 +102,7 @@ let g:NERDTreeIgnore = ['^node_modules$']
 " prettier command for coc
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " run prettier on save
-"let g:prettier#autoformat = 0
+let g:prettier#autoformat = 0
 "autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 
@@ -317,6 +317,9 @@ let g:airline_powerline_fonts = 1
 " 设置Markdown预览
 let g:preview_markdown_vertical = 1
 let g:preview_markdown_parser = 'glow'
+
+" Golang
+let g:go_fmt_command = "goimports"
 
 "" Vista
 "function! NearestMethodOrFunction() abort
