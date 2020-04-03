@@ -8,7 +8,7 @@ export ZSH="/Users/zhangwei/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="bullet-train"
 # ZSH_THEME="dracula"
 
 
@@ -77,6 +77,9 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# autoload -U promptinit; promptinit
+# prompt pure
 
 # User configuration
 
