@@ -107,6 +107,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias bd="/Users/zhangwei/tools/BaiduPCS-Go/BaiduPCS-Go"
+
 export PATH="$HOME/.poetry/bin:$PATH"
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
@@ -118,6 +120,7 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/Downloads/futurerestore_macos_v173:$PATH"
 export GO111MODULE="on"
+export GOPATH="$HOME/go"
 
 # flutter
 export PATH="$PATH:$HOME/development/flutter/bin"
