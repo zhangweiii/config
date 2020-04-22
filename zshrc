@@ -114,6 +114,7 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 

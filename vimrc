@@ -37,6 +37,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'mhinz/vim-startify'
 
 Plug 'skanehira/preview-markdown.vim'
+Plug 'vim-scripts/TaskList.vim'           "快速跳转到TODO列表
+Plug 'Raimondi/delimitMate'               "自动括号补全
 
 " Initialize plugin system
 call plug#end()
@@ -69,6 +71,33 @@ nnoremap <leader>tb :TagbarToggle<CR>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
 let g:tagbar_width = 30
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 
 " open NERDTree automatically
 "autocmd StdinReadPre * let s:std_in=1
