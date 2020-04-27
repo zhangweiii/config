@@ -1,4 +1,34 @@
-" Specify a directory for plugins
+"==============================================================================
+" vim 内置配置 
+"==============================================================================
+
+" 设置 vimrc 修改保存后立刻生效，不用在重新打开
+" 建议配置完成后将这个关闭，否则配置多了之后会很卡
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC
+set relativenumber                  " 显示相对行号
+set number                          " 显示行号，当前行不显示0而显示当前行号
+set smarttab                        " 根据文件中其它地方缩进空格数决定空格数多少
+set cindent                         " C语言缩进风格
+set tabstop=4                       " 设置tab为4个空格
+set shiftwidth=4                    " 缩进空格数为4
+set ignorecase                      " 搜索忽略大小写
+set expandtab                       " 使用空格代替tab
+set scrolloff=5                     " 设置屏幕下方空余5行
+let g:airline_powerline_fonts = 1   " 设置下方箭头三角等字体支持
+
+" 关闭其它buffer
+nnoremap <leader>ca :w <bar> %bd <bar> e# <bar> bd# <CR>
+" 自动补全大括号并换行缩进
+" imap { {}<ESC>i<CR><ESC>V<O          
+
+
+
+
+"==============================================================================
+" 插件配置 
+"==============================================================================
+
+" 插件开始的位置
 call plug#begin('~/.vim/plugged')
 
 " golang 支持
@@ -25,7 +55,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' },
 Plug 'junegunn/fzf.vim',
 "Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdcommenter'
-"Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'rking/ag.vim'
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -43,32 +72,75 @@ Plug 'Raimondi/delimitMate'               "自动括号补全
 " Initialize plugin system
 call plug#end()
 
-" 绑定快捷键
+
+
+
+"==============================================================================
+" 快捷键配置 
+"==============================================================================
+" 设定leader键
 let mapleader = "\<space>"
+" jk连按替代esc
 inoremap jk <ESC>
-" NERDTreeToggle
-nnoremap <leader>tt :NERDTreeToggle<CR>
-vmap ++ <plug>NERDCommenterToggle
-nmap ++ <plug>NERDCommenterToggle
-
+" 搜索整个项目todo
 nnoremap <leader>td :Ag todo<CR>
-
-" PreviewMarkdown
-nnoremap <leader>pw :PreviewMarkdown<CR>
-
-" vimrc
+" 打开vimrc
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
+" 重新加载vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
-
-" buffer
+" 下一个buffer
 nnoremap <leader>bn :bn<CR>
+" 上一个buffer
 nnoremap <leader>bp :bp<CR>
+" 关闭当前buffer
 nnoremap <leader>bd :bd<CR>
+" tab下一个buffer
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+" shift tab 上一个buffer
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-
-nnoremap <leader>tb :TagbarToggle<CR>
+" 显示按键菜单
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+
+
+
+"==============================================================================
+" NERDTree 配置 
+"==============================================================================
+" 激活/隐藏文件树插件 space + tt
+nnoremap <leader>tt :NERDTreeToggle<CR>
+" 自动打开文件树插件
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * NERDTree
+
+let g:NERDTreeGitStatusWithFlags = 1
+"let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"let g:NERDTreeGitStatusNodeColorization = 1
+"let g:NERDTreeColorMapCustom = {
+    "\ "Staged"    : "#0ee375",  
+    "\ "Modified"  : "#d9bf91",  
+    "\ "Renamed"   : "#51C9FC",  
+    "\ "Untracked" : "#FCE77C",  
+    "\ "Unmerged"  : "#FC51E6",  
+    "\ "Dirty"     : "#FFBD61",  
+    "\ "Clean"     : "#87939A",   
+    "\ "Ignored"   : "#808080"   
+    "\ }                         
+
+let g:NERDTreeIgnore = ['^node_modules$']
+" 用文件树插件异步打开文件
+function! IsNERDTreeOpen()        
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+
+
+
+"==============================================================================
+" TagBar 配置 
+"==============================================================================
+" 显示隐藏大纲
+nnoremap <leader>tb :TagbarToggle<CR>
+
 
 let g:tagbar_width = 30
 let g:tagbar_type_go = {
@@ -99,64 +171,22 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-" open NERDTree automatically
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * NERDTree
-
-let g:NERDTreeGitStatusWithFlags = 1
-"let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-"let g:NERDTreeGitStatusNodeColorization = 1
-"let g:NERDTreeColorMapCustom = {
-    "\ "Staged"    : "#0ee375",  
-    "\ "Modified"  : "#d9bf91",  
-    "\ "Renamed"   : "#51C9FC",  
-    "\ "Untracked" : "#FCE77C",  
-    "\ "Unmerged"  : "#FC51E6",  
-    "\ "Dirty"     : "#FFBD61",  
-    "\ "Clean"     : "#87939A",   
-    "\ "Ignored"   : "#808080"   
-    "\ }                         
 
 
-let g:NERDTreeIgnore = ['^node_modules$']
 
-" vim-prettier
-"let g:prettier#quickfix_enabled = 0
-"let g:prettier#quickfix_auto_focus = 0
-" prettier command for coc
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-" run prettier on save
-let g:prettier#autoformat = 0
-"autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
-
-
-" ctrlp
-" let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
-" j/k will move virtual lines (lines that wrap)
-noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-
-set relativenumber
-
-set smarttab
-set cindent
-set tabstop=4
-set shiftwidth=4
-set ignorecase
-" always uses spaces instead of tab characters
-set expandtab
-
+"==============================================================================
+" 主题配置 
+"==============================================================================
 " colorscheme gruvbox
 colorscheme nord
 
-" sync open file with NERDTree
-" " Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
 
-" coc config
+
+
+"==============================================================================
+" COC配置 
+"==============================================================================
+" coc 插件
 let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-pairs',
@@ -168,19 +198,19 @@ let g:coc_global_extensions = [
   \ 'coc-python', 
   \ 'coc-tabnine', 
   \ ]
-" from readme
+
+" 一下大部分都是默认配置,英语不好看不懂...
 " if hidden is not set, TextEdit might fail.
-set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
+set hidden 
 set updatetime=300
 
-" don't give |ins-completion-menu| messages.
+" 不显示 |ins-completion-menu| 信息
 set shortmess+=c
 
-" always show signcolumns
+" 一直显示 signcolumns
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" 使用tab补全
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -192,26 +222,24 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
+" 使用 <c-space> 激活补全
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
+" 使用 <cr> 确认补全
+" Coc只在确认时执行代码片段和附加编辑
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
+" 使用 `[g` 和 `]g` 定位诊断
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
+" 定位到源码
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window
+" 使用 K 在预览窗口展示文档
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -222,75 +250,82 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
+" 突出显示光标下的符号
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap for rename current word
+" 映射重命名当前词键位
 nmap <F2> <Plug>(coc-rename)
 
-" Remap for format selected region
+" 格式化选择的代码
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
-  " Setup formatexpr specified filetype(s).
+  " 设置格式化文件类型
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
+  " 更新 signature 帮助信息在跳转占位符
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" 映射 codeAction 选择区域
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap for do codeAction of current line
+" 映射 codeAction 对于当前行
 nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
+" 映射修复当前行
 nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Create mappings for function text object, requires document symbols feature of languageserver.
+" 为函数文本对象创建映射，需要languageserver的文档符号功能
 xmap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
-" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" 使用 <C-d> 选择迭代?, 需要服务支持, 比如: coc-tsserver, coc-python
 nmap <silent> <C-d> <Plug>(coc-range-select)
 xmap <silent> <C-d> <Plug>(coc-range-select)
 
-" Use `:Format` to format current buffer
+" 使用 `:Format` 来格式化当前 buffer
 command! -nargs=0 Format :call CocAction('format')
 
-" Use `:Fold` to fold current buffer
+" 使用 `:Fold` 来折叠当前 buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-" use `:OR` for organize import of current buffer
+" 使用 `:OR` 来组织当前缓冲区的导入
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
+" 添加状态行支持，用于与其他插件集成，请查看`:h coc status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Using CocList
-" Show all diagnostics
+" 使用 CocList
+" 展示所有检查
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
+" 管理插件
 nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
+" 展示命令
 nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
+" 查找内容
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
+" 查找工作空间内容
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
+" 对下一个对象执行默认动作
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
+" 对上一个对象执行默认动作
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
+" 对最后coc list 摘要
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-" fzf
+
+
+
+"==============================================================================
+" fzf 配置 
+"==============================================================================
+" ctrl p 搜索所有文件
 nmap <C-p> :Files<CR>
+" ctrl e 搜索所有buffer
 nmap <C-e> :Buffers<CR>
 let g:fzf_action = { 'ctrl-e': 'edit' }
 " 让输入上方，搜索列表在下方
@@ -327,22 +362,37 @@ function! OpenFloatingWin()
         \ signcolumn=no
 endfunction
 
-" 设置小项
-" 设置屏幕下方空余5行
-set scrolloff=5
 
+
+
+"==============================================================================
+" airline 配置 
+"==============================================================================
 " 状态栏设置
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-" 设置下方箭头三角等字体支持
-let g:airline_powerline_fonts = 1
 
+
+
+"==============================================================================
+" preview-markdown 配置 
+"==============================================================================
 " 设置Markdown预览
 let g:preview_markdown_vertical = 1
 let g:preview_markdown_parser = 'glow'
+" 预览markdown
+nnoremap <leader>pw :PreviewMarkdown<CR>
 
-" Golang
+
+
+
+"==============================================================================
+" Go语言配置 
+"==============================================================================
 let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+" let g:go_metalinter_deadline = '20s'
+nnoremap <leader>gl :GoMetaLinter<CR>
