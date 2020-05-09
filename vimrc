@@ -69,6 +69,11 @@ Plug 'skanehira/preview-markdown.vim'
 Plug 'vim-scripts/TaskList.vim'           "快速跳转到TODO列表
 Plug 'Raimondi/delimitMate'               "自动括号补全
 
+Plug 'posva/vim-vue'                      "vue
+
+Plug 'pangloss/vim-javascript'            "javascript
+Plug 'mxw/vim-jsx'                        "jsx
+
 " Initialize plugin system
 call plug#end()
 
