@@ -8,7 +8,8 @@ export ZSH="/Users/zhangwei/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="bullet-train"
+ZSH_THEME="ys"
+# ZSH_THEME="bullet-train"
 # ZSH_THEME="dracula"
 
 
@@ -107,24 +108,55 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias bd="/Users/zhangwei/tools/BaiduPCS-Go/BaiduPCS-Go"
-
+# Python poetry 虚拟环境
 export PATH="$HOME/.poetry/bin:$PATH"
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
+# Python pyenv 虚拟环境和Python版本管理
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+export PYENV_ROOT="$HOME/.pyenv"
 
+# HomeBrew 中科大镜像源
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Go 相关
 export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/Downloads/futurerestore_macos_v173:$PATH"
 export GO111MODULE="on"
 export GOPATH="$HOME/go"
+export GOROOT=/usr/local/opt/go/libexec
 
 # flutter
 export PATH="$PATH:$HOME/development/flutter/bin"
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 
+# Crawlab 测试环境设置
+export CRAWLAB_MONGO_DB=crawlab_test
+export CRAWLAB_COLLECTION=results_local
+
+# QT
+export PATH="$HOME/Qt/5.14.2/clang_64/bin:$PATH"
+
+# Python 相关
+export PATH="$PATH:$HOME/bin"
+export PATH="$PATH:/Users/zhangwei/Library/Python/3.7/bin"
+export PATH="$PATH:/usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/bin"
+
+# 设置默认编辑器为nvim
+export EDITOR="nvim"
+
+# 设置代理
+alias setproxy="export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891"
+alias unsetproxy="export https_proxy='' http_proxy='' all_proxy=''"
+
+# 常用命令
+alias c="clear"
+alias s="neofetch"
+alias rt="tmux source ~/.tmux.conf.local"
+alias sw="tmuxinator start work"
+alias study="tmuxinator start study"
+# BaiDuduPCS
+alias bd="/Users/zhangwei/tools/BaiduPCS-Go/BaiduPCS-Go"
